@@ -1,9 +1,13 @@
-package views;
+package org.iuea.oop;
 
-public class main {
+import org.iuea.oop.views.LoginView;
+
+public class Main {
 
     public static void main(String[] args) {
         LoginView login =new LoginView();
+
+	MainView main = new MainView();
 
 //       names:
 //    	   CUBAKA MUSHAMALIRWA CHRISTOPHE 18/973/BIT-S
