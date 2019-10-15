@@ -44,7 +44,7 @@ public class MainView extends JFrame {
 	public static void main(String[] args) {
 		
 		
-		//copied to the class that we want to have access 
+		//copied to the class that we want to have access  to
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
