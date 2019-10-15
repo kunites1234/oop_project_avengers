@@ -24,6 +24,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.DefaultComboBoxModel;
 
 public class MainView extends JFrame {
@@ -35,6 +36,7 @@ public class MainView extends JFrame {
 	private JTextField lastname;
 	private JTextField regnum;
 	private JTextField course;
+	private JButton submit;
 	JComboBox sex;
 	/*
 	 Launch the application.
@@ -90,6 +92,7 @@ public class MainView extends JFrame {
 		JSeparator separator_3 = new JSeparator();
 		mnAction.add(separator_3);
 		
+		
 		JMenuItem mntmLogout = new JMenuItem("Logout");
 		mnAction.add(mntmLogout);
 		mntmLogout.addActionListener(new ActionListener() {
@@ -100,6 +103,7 @@ public class MainView extends JFrame {
          			public void run() {
          				try {
          					LoginView frame = new LoginView();
+         					
          					frame.setVisible(true);
          				} catch (Exception e) {
          					e.printStackTrace();
@@ -153,7 +157,10 @@ public class MainView extends JFrame {
 		registration_panel.setLayout(null);
 		registration_panel.setVisible(false); 
 		
-		
+		/*JDialog notmodal = new JDialog();
+	   contentPane.add(notmodal);
+	   notmodal.show();*/
+
 		JButton btnNewButton = new JButton("Delete");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -201,6 +208,27 @@ public class MainView extends JFrame {
 		JButton btnEdit = new JButton("Edit");
 		btnEdit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				submit.setText("Edit");
+				if(table_2.getSelectedRow() < 0) {
+					JOptionPane.showMessageDialog(null, "Please select a row to edit");
+					return;
+				}
+				registration_panel.setVisible(true); 
+				student_panel.setVisible(false);
+				int selectedRow = table_2.getSelectedRow();
+				String userId = (String) table_2.getValueAt(selectedRow, 0).toString();
+				String fstname = (String) table_2.getValueAt(selectedRow, 1).toString();
+				String lstname = (String) table_2.getValueAt(selectedRow, 2).toString();
+				String sexGender = (String) table_2.getValueAt(selectedRow, 3).toString();
+				String crs = (String) table_2.getValueAt(selectedRow, 4).toString();
+				String regNumber = (String) table_2.getValueAt(selectedRow, 5).toString();
+				
+				id.setText(userId);
+				firstname.setText(fstname);
+				lastname.setText(lstname);
+				course.setText(crs);
+				regnum.setText(regNumber);
+				sex.setSelectedItem(sexGender.toLowerCase());
 				
 			}
 		});
@@ -208,9 +236,10 @@ public class MainView extends JFrame {
 		btnEdit.setBackground(Color.ORANGE);
 		btnEdit.setBounds(243, 24, 116, 50);
 		student_panel.add(btnEdit);
+		registration_panel.setVisible(true); 
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(0, 99, 612, 356);
+		scrollPane_1.setBounds(10, 85, 612, 356);
 		student_panel.add(scrollPane_1);
 		
 		table_2 = new JTable();
@@ -292,7 +321,7 @@ public class MainView extends JFrame {
 		registration_panel.add(sex);
 		
 		
-		JButton submit = new JButton("Submit");
+		submit = new JButton("Submit");
 		submit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String uid = id.getText();
@@ -302,10 +331,25 @@ public class MainView extends JFrame {
 				String regnumber = regnum.getText();
 				String gender = (String) sex.getSelectedItem();
 				
-				
+				int selectedRow = table_2.getSelectedRow();
 				
 				if(fname.equals("") || lname.equals("") || ucourse.equals("") || regnumber.equals("") || gender.equals("")) {
 					JOptionPane.showMessageDialog(null,"fill requirde fields");
+					return;
+				}
+				
+				if(submit.getText().equals("Edit")) {
+					table_2.setValueAt(uid, selectedRow, 0);
+					table_2.setValueAt(fname, selectedRow, 1);
+					table_2.setValueAt(lname, selectedRow, 2);
+					table_2.setValueAt(gender, selectedRow, 3);
+					table_2.setValueAt(ucourse, selectedRow, 4);
+					table_2.setValueAt(regnumber, selectedRow, 5);
+					
+					
+					registration_panel.setVisible(false);
+					student_panel.setVisible(true);
+					submit.setText("Submit");
 					return;
 				}
 				
