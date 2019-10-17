@@ -44,7 +44,7 @@ public class MainView extends JFrame {
 	public static void main(String[] args) {
 		
 		
-		//copied to the class that we want to have access  to
+		//copied to the class that we want to have access 
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -157,10 +157,6 @@ public class MainView extends JFrame {
 		registration_panel.setLayout(null);
 		registration_panel.setVisible(false); 
 		
-		/*JDialog notmodal = new JDialog();
-	   contentPane.add(notmodal);
-	   notmodal.show();*/
-
 		JButton btnNewButton = new JButton("Delete");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -171,8 +167,17 @@ public class MainView extends JFrame {
 					}
 					JOptionPane.showMessageDialog(null,"Select A row first","Hint",JOptionPane.OK_OPTION);
 				}
+				
 					else {
-						model.removeRow(table_2.getSelectedRow());
+						int option = JOptionPane.showConfirmDialog(null,"Are you sure you want to delete");
+						System.out.println(option);
+						
+						if(option==0) {
+							
+							model.removeRow(table_2.getSelectedRow());
+							JOptionPane.showMessageDialog(null, "You have deleted a record successfully");
+						}
+						
 					}				
 			}
 		});
